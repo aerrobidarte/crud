@@ -14,8 +14,6 @@ const controller = {
 		let offers=products.filter(function(pr){
 			return pr.category=='in-sale';
 		});
-		console.log(pvisited);
-		console.log(offers);
 
 		res.render('index',{pvisited:pvisited,offers:offers});
 	},
