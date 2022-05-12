@@ -29,7 +29,18 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		res.send("Soy UN post")
+		let usuario={
+			//id:
+			name: req.body.name,
+			price: req.body.price,
+			discount: req.body.discount,
+			category: req.body.category,
+			description: req.body.description,
+			//"image": "img-cafetera-moulinex.jpg"
+		}
+		products.push(usuario);
+		res.redirect("/products");
+		//res.send("Soy UN post")
 		// Do the magic
 	},
 
