@@ -45,16 +45,40 @@ const controller = {
 	},
 
 	// Update - Form to edit
-	edit: (req, res) => {
+	edit: function (req,res){
+		let pto=products.find(function(pr){
+			return pr.id==req.params.id;
+		});
+		res.render("product-edit-form",{pto:pto});
 		// Do the magic
 	},
 	// Update - Method to update
 	update: (req, res) => {
+		let pto=products.find(function(pr){
+			return pr.id==req.params.id;
+		});
+		let i=products.indexOf(pto);
+		// console.log(pto);
+		products[i].name=req.body.name;
+		products[i].price=req.body.price;
+		products[i].discount=req.body.discount;
+		products[i].category=req.body.category;
+		products[i].description=req.body.description;
+
+		res.redirect("/products");
 		// Do the magic
 	},
 
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
+		let pto=products.find(function(pr){
+			return pr.id==req.params.id;
+		});
+		let i=products.indexOf(pto);
+		products.splice (i, 1);
+		res.redirect("/products");
+		//products.splice
+		//products.splice
 		// Do the magic
 	}
 };
