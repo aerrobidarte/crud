@@ -1,3 +1,4 @@
+const { json } = require('express/lib/response');
 const fs = require('fs');
 const path = require('path');
 
@@ -28,17 +29,21 @@ const controller = {
 	},
 	
 	// Create -  Method to store
-	store: (req, res) => {
+	store: function (req, res) {
 		let usuario={
-			//id:
+			id: req.body.id,
 			name: req.body.name,
 			price: req.body.price,
 			discount: req.body.discount,
 			category: req.body.category,
 			description: req.body.description,
-			//"image": "img-cafetera-moulinex.jpg"
+			image: req.body.image,
 		}
 		products.push(usuario);
+		let ptos=JSON.stringify(products);
+		fs.writeFileSync(productsFilePath,ptos);
+
+		console.log(products);
 		res.redirect("/products");
 		//res.send("Soy UN post")
 		// Do the magic
