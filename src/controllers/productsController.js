@@ -30,23 +30,22 @@ const controller = {
 	
 	// Create -  Method to store
 	store: function (req, res) {
-		let usuario={
-			id: req.body.id,
-			name: req.body.name,
-			price: req.body.price,
-			discount: req.body.discount,
-			category: req.body.category,
-			description: req.body.description,
-			image: req.body.image,
-		}
-		products.push(usuario);
-		let ptos=JSON.stringify(products);
-		fs.writeFileSync(productsFilePath,ptos);
 
-		console.log(products);
-		res.redirect("/products");
-		//res.send("Soy UN post")
-		// Do the magic
+		if(req.file){
+			if (products==""){
+				products=[];
+			}
+	
+			let producto=req.body;
+			producto.image=req.file.filename;
+
+			products.push(producto);
+			fs.writeFileSync(productsFilePath,JSON.stringify(products));
+			res.redirect("/products");
+		}else{
+			console.log("llego");
+			res.redirect("/products/create");
+		}
 	},
 
 	// Update - Form to edit
@@ -70,6 +69,8 @@ const controller = {
 		products[i].category=req.body.category;
 		products[i].description=req.body.description;
 
+		fs.writeFileSync(productsFilePath,JSON.stringify(products));
+
 		res.redirect("/products");
 		// Do the magic
 	},
@@ -82,6 +83,7 @@ const controller = {
 		let i=products.indexOf(pto);
 		products.splice (i, 1);
 		res.redirect("/products");
+		fs.writeFileSync(productsFilePath,JSON.stringify(products));
 		//products.splice
 		//products.splice
 		// Do the magic
